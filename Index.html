@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="monetag" content="f2c75d38c0b8029510e6a42b7fadfb14">
+    <title>Deen Connect - Video System v3.2(Normal)</title>
+     
+     <!-- Ads -->
+    <script src="https://quge5.com/88/tag.min.js" data-zone="282058" async data-cfasync="false"></script>
+     
+     <!-- Vignate -->
+    <script>(function(s){s.dataset.zone='11822929',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+    <!-- banner -->
+    <script>(function(s){s.dataset.zone='11817534',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+
+
+    <script src='https://8x8.vc/vpaas-magic-cookie-597bd5a7fd504fd7a90216318e083261/external_api.js' async></script>
+    <style>
+        :root {
+            --primary: #f59e0b;
+            --accent-blue: #3b82f6;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --bg-dark: #070913;
+            --bg-card: rgba(18, 24, 43, 0.85);
+            --bg-glass: rgba(255, 255, 255, 0.04);
+            --border-glass: rgba(255, 255, 255, 0.12);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --sidebar-width: 280px;
+            --header-height: 70px;
+            --radius-md: 14px;
+            --radius-lg: 24px;
+            --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        *, *::before, *::after {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+        body {
+            width: 100%; min-height: 100vh;
+            background: radial-gradient(circle at 50% 0%, #1e1b4b, #0f172a 60%, var(--bg-dark));
+            background-attachment: fixed; color: var(--text-main);
+            overflow-x: hidden; display: flex; flex-direction: column; align-items: center;
+        }
+
+        /* -------------------------------------------------- */
+        /* 12-SECOND ROBOTIC MACHINE SPLASH SCREEN           */
+        /* -------------------------------------------------- */
+        #splash-screen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: radial-gradient(circle at 50% 30%, #1e1b4b, #0f172a 70%, #070913);
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+            transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1), visibility 1s ease;
+        }
+
+        .splash-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        /* Phase 1: Machine Core Spinner */
+        .splash-loader-box {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            animation: coreAppear 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .splash-spinner {
+            width: 100%;
+            height: 100%;
+            border: 4px dashed rgba(251, 191, 36, 0.2);
+            border-top: 4px solid #fbbf24;
+            border-right: 4px solid #f59e0b;
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.3);
+        }
+
+        /* Phase 2: Title comes from TOP */
+        .splash-logo {
+            font-size: 38px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1.5px;
+            opacity: 0;
+            transform: translateY(-120px);
+            animation: machineDrop 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 3s forwards;
+        }
+
+        /* Phase 3: Name comes from BOTTOM */
+        .splash-dev-info {
+            font-size: 18px;
+            color: #f8fafc;
+            opacity: 0;
+            transform: translateY(120px);
+            animation: machineRise 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 5s forwards;
+        }
+
+        .splash-dev-info strong {
+            color: #fbbf24;
+            display: inline-block;
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+
+        /* Phase 4: Version comes from LEFT */
+        .splash-version-box {
+            opacity: 0;
+            transform: translateX(-200px);
+            animation: machineSlideLeft 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 7s forwards;
+        }
+
+        .splash-version-box span {
+            font-size: 14px;
+            font-weight: 800;
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+            padding: 4px 14px;
+            border-radius: 12px;
+            border: 1px solid #f59e0b;
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+        }
+
+        .splash-subtext {
+            font-size: 13px;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
+            opacity: 0;
+            animation: fadeIn 1s ease 9s forwards;
+        }
+
+        #splash-screen.hide-splash {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* ROBOTIC MACHINE ANIMATIONS */
+        @keyframes coreAppear { from { opacity: 0; transform: scale(0.3); } to { opacity: 1; transform: scale(1); } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        @keyframes machineDrop {
+            0% { opacity: 0; transform: translateY(-120px); }
+            70% { transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes machineRise {
+            0% { opacity: 0; transform: translateY(120px); }
+            70% { transform: translateY(-10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes machineSlideLeft {
+            0% { opacity: 0; transform: translateX(-200px); }
+            70% { transform: translateX(10px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes pulseGlow { 0%, 100% { text-shadow: 0 0 5px rgba(251, 191, 36, 0.2); } 50% { text-shadow: 0 0 18px rgba(251, 191, 36, 0.8); } }
+
+        /* UI STYLES */
+        header {
+            width: 100%; height: var(--header-height);
+            background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-glass);
+            padding: 0 25px; display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .header-left { display: flex; align-items: center; gap: 15px; }
+        .menu-toggle-btn {
+            background: var(--bg-glass); border: 1px solid var(--border-glass); color: #fff;
+            width: 42px; height: 42px; border-radius: var(--radius-md);
+            display: flex; justify-content: center; align-items: center; cursor: pointer;
+            font-size: 22px; transition: var(--transition-smooth);
+        }
+        .menu-toggle-btn:hover { background: var(--primary); color: #000; }
+        .brand-logo {
+            font-size: 20px; font-weight: 900;
+            background: linear-gradient(135deg, #ffffff, #fbbf24);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; cursor: pointer;
+        }
+        .version-tag {
+            font-size: 11px; background: rgba(245, 158, 11, 0.2); color: var(--primary);
+            padding: 2px 8px; border-radius: 10px; border: 1px solid var(--primary); margin-left: 8px;
+        }
+        .top-nav-links { display: flex; gap: 10px; }
+        .nav-btn {
+            background: var(--bg-glass); border: 1px solid var(--border-glass);
+            color: var(--text-muted); padding: 9px 18px; border-radius: 30px;
+            font-size: 13px; font-weight: 700; cursor: pointer; transition: var(--transition-smooth);
+        }
+        .nav-btn:hover { background: var(--primary); color: #000; border-color: var(--primary); }
+        .sidebar-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px);
+            z-index: 9998; opacity: 0; pointer-events: none; transition: var(--transition-smooth);
+        }
+        .sidebar-overlay.active { opacity: 1; pointer-events: auto; }
+        .sidebar {
+            position: fixed; top: 0; left: calc(-1 * var(--sidebar-width));
+            width: var(--sidebar-width); height: 100vh;
+            background: rgba(15, 23, 42, 0.98); backdrop-filter: blur(25px);
+            border-right: 1px solid var(--border-glass); z-index: 9999;
+            padding: 25px 20px; display: flex; flex-direction: column; gap: 15px;
+            transition: var(--transition-smooth); box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+        }
+        .sidebar.active { left: 0; }
+        .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border-glass); padding-bottom: 15px; }
+        .sidebar-title { font-size: 18px; font-weight: 800; color: #fbbf24; }
+        .close-sidebar-btn { background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; }
+        .sidebar-item {
+            padding: 12px 16px; border-radius: var(--radius-md); color: var(--text-main);
+            background: var(--bg-glass); border: 1px solid var(--border-glass);
+            font-size: 14px; font-weight: 600; cursor: pointer; transition: var(--transition-smooth);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .sidebar-item:hover { background: var(--primary); color: #000; transform: translateX(5px); }
+        .container { width: 92%; max-width: 600px; margin-top: 35px; margin-bottom: 50px; }
+        .notice-banner {
+            display: none; animation: fadeIn 0.5s ease-in-out;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.22), rgba(245, 158, 11, 0.05));
+            border: 1px solid var(--primary); border-radius: var(--radius-lg);
+            padding: 22px; margin-bottom: 25px; text-align: center;
+        }
+        .notice-title { font-size: 15px; color: #fbbf24; font-weight: 800; margin-bottom: 14px; }
+        .notice-actions { display: flex; gap: 12px; justify-content: center; }
+        .btn-sm { padding: 10px 20px; border-radius: var(--radius-md); border: none; font-weight: 800; cursor: pointer; font-size: 13px; transition: var(--transition-smooth); }
+        .btn-host-action { background: var(--accent-green); color: #fff; }
+        .btn-user-action { background: var(--accent-blue); color: #fff; }
+        #user-expandable-box {
+            display: none; margin-top: 15px; padding: 18px;
+            background: rgba(15, 23, 42, 0.9); border-radius: var(--radius-md);
+            border: 1px dashed var(--primary); text-align: left; animation: machineDrop 0.3s ease;
+        }
+        .card-section {
+            background: var(--bg-card); backdrop-filter: blur(20px);
+            padding: 35px 30px; border-radius: var(--radius-lg);
+            border: 1px solid var(--border-glass); margin-bottom: 25px; text-align: center;
+            transition: var(--transition-smooth);
+        }
+        .card-section h2 { font-size: 22px; margin-bottom: 20px; color: #fbbf24; }
+        .input-group { margin-bottom: 15px; text-align: left; }
+        .input-group label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
+        input[type="text"], input[type="password"] {
+            width: 100%; padding: 14px 18px; border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md); background: rgba(15, 23, 42, 0.85);
+            color: #fff; font-size: 14px; outline: none; transition: var(--transition-smooth);
+        }
+        .action-btn {
+            width: 100%; padding: 15px; border: none; border-radius: var(--radius-md);
+            background: linear-gradient(135deg, #fbbf24, var(--primary));
+            color: #0b0f19; font-weight: 800; font-size: 15px; cursor: pointer; margin-top: 8px;
+            transition: var(--transition-smooth);
+        }
+        .btn-secondary { background: rgba(255, 255, 255, 0.08); color: #fff; border: 1px solid var(--border-glass); }
+        .about-card {
+            background: var(--bg-card); backdrop-filter: blur(20px);
+            padding: 35px 30px; border-radius: var(--radius-lg);
+            border: 1px solid var(--border-glass); margin-bottom: 40px; text-align: left;
+        }
+        .about-card h3 { color: #fbbf24; font-size: 20px; margin-bottom: 15px; text-align: center; }
+        .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 15px; }
+        .about-item { background: var(--bg-glass); padding: 15px; border-radius: var(--radius-md); border: 1px solid var(--border-glass); }
+        .about-item b { color: #fbbf24; display: block; margin-bottom: 4px; font-size: 12px; }
+        #toast {
+            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
+            padding: 14px 28px; border-radius: 50px; font-size: 14px; font-weight: 700;
+            z-index: 30000; transition: var(--transition-smooth); opacity: 0;
+        }
+        #toast.show { top: 85px; opacity: 1; }
+        #toast.toast-error { background: rgba(239, 68, 68, 0.95); color: #fff; }
+        #toast.toast-success { background: rgba(16, 185, 129, 0.95); color: #fff; }
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); z-index: 10000;
+            justify-content: center; align-items: center;
+        }
+        .modal.open { display: flex; animation: fadeIn 0.3s ease; }
+        .modal-content { background: #0f172a; padding: 30px; border-radius: var(--radius-lg); width: 92%; max-width: 500px; border: 1px solid var(--border-glass); max-height: 90vh; overflow-y: auto; }
+        .help-link { font-size: 12px; color: #fbbf24; text-align: center; margin-top: 10px; cursor: pointer; text-decoration: underline; }
+        .zoom-loader-container { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
+        .zoom-spinner {
+            width: 70px; height: 70px; border: 6px solid rgba(251, 191, 36, 0.15);
+            border-top: 6px solid var(--primary); border-radius: 50%;
+            animation: spin 0.9s linear infinite; margin-bottom: 22px;
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.3);
+        }
+        .zoom-loader-title { font-size: 19px; font-weight: 800; color: #fbbf24; margin-bottom: 10px; }
+        .zoom-loader-subtext { font-size: 13px; color: var(--text-muted); line-height: 1.6; max-width: 330px; margin-bottom: 22px; }
+        .owner-section-box { background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); padding: 16px; border-radius: 12px; margin-bottom: 18px; text-align: left; }
+        .owner-section-box h4 { color: #fbbf24; margin-bottom: 12px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 6px; }
+ 
+ 
+ /* ===== MANUAL STYLES ===== */
+.manual-summary {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-top: 25px;
+  text-align: left;
+}
+.manual-summary h3 {
+  color: #fbbf24;
+  font-size: 16px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+.manual-item {
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.manual-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.manual-item b {
+  color: #fbbf24;
+  font-size: 13px;
+  display: block;
+  margin-bottom: 4px;
+}
+.manual-item p {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.manual-btn {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  padding: 12px;
+  background: rgba(245,158,11,0.15);
+  border: 1px solid var(--primary);
+  color: #fbbf24;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  text-align: center;
+}
+#manual-page {
+  display: none;
+  width: 92%;
+  max-width: 860px;
+  margin: 30px auto 60px;
+}
+.manual-full {
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px;
+}
+.manual-full h2 {
+  color: #fbbf24;
+  font-size: 26px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.manual-full .sub {
+  text-align: center;
+  color: var(--text-muted);
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+.manual-section {
+  margin-bottom: 28px;
+}
+.manual-section h3 {
+  color: #fbbf24;
+  font-size: 17px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid rgba(245,158,11,0.25);
+  padding-bottom: 6px;
+}
+.manual-section p, .manual-section li {
+  font-size: 14.5px;
+  color: #cbd5e1;
+  line-height: 1.75;
+  margin-bottom: 8px;
+}
+.manual-section ul {
+  padding-left: 20px;
+}
+.manual-highlight {
+  background: rgba(245,158,11,0.1);
+  border-left: 4px solid #fbbf24;
+  padding: 14px 16px;
+  border-radius: 0 12px 12px 0;
+  margin: 14px 0;
+  font-size: 14px;
+  color: #e2e8f0;
+}
+ 
+    </style>
+</head>
+<body>
+
+    <!-- 12-SECOND ROBOTIC MACHINE SPLASH LOADING SCREEN -->
+    <div id="splash-screen">
+        <div class="splash-content">
+            <!-- 1. Core Spinner -->
+            <div class="splash-loader-box">
+                <div class="splash-spinner"></div>
+            </div>
+            <!-- 2. Main Title (From Top) -->
+            <div class="splash-logo">Deen Connect(NORMAL)</div>
+            <!-- 3. Developer Name (From Bottom) -->
+            <div class="splash-dev-info">
+                Developed by <strong>Hasan Al Bannah Muzahid</strong>
+            </div>
+            <!-- 4. Version (From Left) -->
+            <div class="splash-version-box">
+                <span>System Version v3.2(NORMAL)</span>
+            </div>
+            <!-- Subtext -->
+            <p class="splash-subtext">Initializing Secure Connection...</p>
+        </div>
+    </div>
+
+    <div id="toast"><span id="toast-msg"></span></div>
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="sidebar-title">Navigation</span>
+            <button class="close-sidebar-btn" onclick="toggleSidebar()">&times;</button>
+        </div>
+        <div class="sidebar-item" onclick="scrollToSec('join-sec'); toggleSidebar();">🚪 Join Meeting</div>
+        <div class="sidebar-item" onclick="scrollToSec('create-sec'); toggleSidebar();">➕ Create Meeting</div>
+        <div class="sidebar-item" onclick="scrollToSec('owner-sec'); toggleSidebar();">🔑 Owner Login</div>
+        <div class="sidebar-item" onclick="scrollToSec('about-sec'); toggleSidebar();">👨‍💻 About Developer</div>
+        <div class="sidebar-item" onclick="showManualPage(); toggleSidebar();">📖 User Manual</div>
+    </div>
+    <header>
+        <div class="header-left">
+            <button class="menu-toggle-btn" onclick="toggleSidebar()">☰</button>
+            <div class="brand-logo" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                Deen Connect(Normal) <span class="version-tag">v3.2(NORMAL)</span>
+            </div>
+        </div>
+        <div class="top-nav-links">
+            <button class="nav-btn" onclick="scrollToSec('join-sec')">Join</button>
+            <button class="nav-btn" onclick="scrollToSec('create-sec')">Create</button>
+            <button class="nav-btn" onclick="scrollToSec('owner-sec')">Owner</button>
+            <button class="nav-btn" onclick="showManualPage()">Manual</button>
+            <button class="nav-btn" onclick="scrollToSec('about-sec')">About</button>
+        </div>
+    </header>
+    <div class="container">
+        <!-- Banner -->
+        <div id="notice-banner" class="notice-banner">
+            <div id="notice-text" class="notice-title">Meeting চলছে [Room Name]</div>
+            <div class="notice-actions">
+                <button class="btn-sm btn-host-action" onclick="openHostJoinModal()">Join as Host</button>
+                <button class="btn-sm btn-user-action" onclick="toggleUserExpandableBox()">Join as User</button>
+            </div>
+            <div id="user-expandable-box">
+                <label>মিটিং পাসওয়ার্ড (যদি থাকে):</label>
+                <input type="password" id="exp-user-pass" placeholder="Enter Room Password" style="margin-bottom:10px;" />
+                <label>আপনার নাম:</label>
+                <input type="text" id="exp-user-name" placeholder="Enter Your Display Name" style="margin-bottom:12px;" />
+                <button class="action-btn" onclick="executeExpandableUserJoin()">এখনই যোগ দিন 🚀</button>
+            </div>
+        </div>
+        <!-- Join Sec -->
+        <div id="join-sec" class="card-section">
+            <h2>🚪 Join Meeting</h2>
+            <div class="input-group">
+                <label>মিটিং নাম (Room Name):</label>
+                <input type="text" id="join-room" placeholder="Enter Room Name" />
+            </div>
+            <div class="input-group">
+                <label>পাসওয়ার্ড (Optional):</label>
+                <input type="password" id="join-password" placeholder="Enter Password" />
+            </div>
+            <div class="input-group">
+                <label>আপনার নাম (Display Name):</label>
+                <input type="text" id="join-name" placeholder="Enter Your Display Name" />
+            </div>
+            <button class="action-btn" onclick="joinMeetingProcess()">Join Meeting 🚀</button>
+        </div>
+        <!-- Create Sec -->
+        <div id="create-sec" class="card-section">
+            <h2>➕ Create Meeting</h2>
+            <div class="input-group">
+                <label>Host Username:</label>
+                <input type="text" id="host-user" placeholder="Host Username" />
+            </div>
+            <div class="input-group">
+                <label>Host Password:</label>
+                <input type="password" id="host-pass" placeholder="Host Password" />
+            </div>
+            <div class="input-group">
+                <label>নতুন মিটিংয়ের নাম (Room Name):</label>
+                <input type="text" id="create-room" placeholder="Room Name" />
+            </div>
+            <div class="input-group">
+                <label>রুম পাসওয়ার্ড (Optional):</label>
+                <input type="password" id="create-password" placeholder="Set Room Password" />
+            </div>
+            <div class="input-group">
+                <label>আপনার নাম (Display Name):</label>
+                <input type="text" id="create-name" placeholder="Your Display Name" />
+            </div>
+            <div style="display:flex; gap:10px;">
+                <button class="action-btn" onclick="handleCreateMeeting(true)">Create & Start</button>
+                <button class="action-btn btn-secondary" onclick="handleCreateMeeting(false)">Create & Wait</button>
+            </div>
+        </div>
+      <!-- Owner Sec -->
+        <div id="owner-sec" class="card-section">
+            <h2>🔑 Owner Login</h2>
+            <div class="input-group">
+                <input type="text" id="owner-u" placeholder="Enter Owner Username" />
+            </div>
+            <div class="input-group">
+                <input type="password" id="owner-p" placeholder="Enter Owner Password" />
+            </div>
+            <button class="action-btn" onclick="openOwnerModal()">Open Owner Dashboard</button>
+        </div>
+
+        <!-- ABOUT DEVELOPER -->
+        <div id="about-sec" class="about-card">
+            <h3>👨‍💻 About Developer & System</h3>
+            <div class="about-grid">
+                <div class="about-item">
+                    <b>System Version</b>
+                    <p>v3.2 (NORMAL Edition)</p>
+                </div>
+                <div class="about-item">
+                    <b>Developer Name</b>
+                    <p>Hasan Al Bannah Muzahid</p>
+                </div>
+                <div class="about-item">
+                    <b>Role & Expertise</b>
+                    <p>Full Stack Web & App Developer & IT EXPERT</p>
+                </div>
+                <div class="about-item">
+                    <b>Duration of Creation</b>
+                    <p>1 Month+</p>
+                </div>
+                <div class="about-item">
+                    <b>My skills and hire link</b>
+                    <p>tinyurl.com/skills-hire-me</p>
+                </div>
+                <div class="about-item">
+                    <b>Grade / Education</b>
+                    <p>Class VI | Wisdom Int. School & College</p>
+                </div>
+                <div class="about-item">
+                    <b>Contact Email</b>
+                    <p>muzahid0144181@gmail.com</p>
+                </div>
+                <div class="about-item">
+                    <b>WhatsApp Contact</b>
+                    <p>+880 1718517927</p>
+                </div>
+            </div>
+        </div>   <!-- এখানে About Card শেষ -->
+
+        <!-- Summary Manual এখানে বসবে (About Card এর বাইরে) -->
+        <div class="manual-summary">
+          <h3>📖 দ্রুত ম্যানুয়াল</h3>
+          <div class="manual-item">
+            <b>১. Join Meeting</b>
+            <p>Room Name + আপনার নাম দিয়ে Join বাটনে চাপুন।</p>
+          </div>
+          <div class="manual-item">
+            <b>২. Create Meeting</b>
+            <p>Host Username ও Password দিয়ে নতুন Room তৈরি করুন।</p>
+          </div>
+          <div class="manual-item">
+            <b>৩. Owner Dashboard</b>
+            <p>Owner লগইন করে Host যোগ/ডিলিট ও মিটিং কন্ট্রোল করুন।</p>
+          </div>
+          <div class="manual-item">
+            <b>৪. মিটিং চলাকালীন</b>
+            <p>উপরের ব্যানার থেকে দ্রুত Join করা যায়।</p>
+          </div>
+          <div class="manual-btn" onclick="showManualPage()">📖 সম্পূর্ণ বিশাল ম্যানুয়াল পড়ুন</div>
+        </div>
+
+    </div>  <!-- এই </div> হলো container এর শেষ -->
+
+
+    <!-- ZOOM STYLE WAITING LOADER MODAL -->
+    <div class="modal" id="zoom-waiting-modal">
+        <div class="modal-content">
+            <div class="zoom-loader-container">
+                <div class="zoom-spinner"></div>
+                <div class="zoom-loader-title">হোস্ট এখনো মিটিংয়ে যুক্ত হননি</div>
+                <div class="zoom-loader-subtext">অনুগ্রহ করে অপেক্ষা করুন... হোস্ট জয়েন করার সাথে সাথে মিটিং শুরু হবে।</div>
+                <button class="action-btn btn-secondary" style="width: auto; padding: 10px 25px;" onclick="cancelWaiting()">অপেক্ষা বাতিল করুন</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Host Login Modal -->
+    <div class="modal" id="host-login-modal">
+        <div class="modal-content">
+            <h3 style="color:#fbbf24; margin-bottom:15px; text-align:center;">Host Verification</h3>
+            <div class="input-group">
+                <input type="text" id="banner-host-u" placeholder="Host Username" />
+            </div>
+            <div class="input-group">
+                <input type="password" id="banner-host-p" placeholder="Host Password" />
+            </div>
+            <div class="input-group">
+                <input type="text" id="banner-host-name" placeholder="Your Display Name" />
+            </div>
+            <button class="action-btn" onclick="submitHostBannerJoin()">Start Meeting as Host</button>
+            <div class="help-link" onclick="scrollToSec('about-sec'); closeModal('host-login-modal');">ইউজারনেম বা পাসওয়ার্ড ভুলে গেছেন? Owner-এর সাথে যোগাযোগ করুন</div>
+            <button class="action-btn btn-secondary" style="margin-top:12px;" onclick="closeModal('host-login-modal')">বাতিল</button>
+        </div>
+    </div>
+
+    <!-- OWNER DASHBOARD MODAL -->
+    <div class="modal" id="owner-modal">
+        <div class="modal-content">
+            <h3 style="color:#fbbf24; text-align:center; margin-bottom:20px;">⚡ Owner Master Dashboard</h3>
+            <div class="owner-section-box">
+                <h4>📊 চলমান মিটিং সংক্রান্ত তথ্য (Live Overview)</h4>
+                <div id="meeting-details-content" style="font-size: 13px; color: var(--text-muted); line-height: 1.7;">
+                    ডাটা লোড হচ্ছে...
+                </div>
+            </div>
+            <div class="owner-section-box">
+                <h4>👤 হোস্ট নির্দেশিকা ও এড করুন</h4>
+                <div class="input-group">
+                    <input type="text" id="new-host-u" placeholder="New Host Username" />
+                </div>
+                <div class="input-group">
+                    <input type="password" id="new-host-p" placeholder="New Host Password" />
+                </div>
+                <button class="action-btn" style="padding:10px; font-size:13px;" onclick="createNewHost()">Create New Host</button>
+                <div id="host-list-container" style="max-height:130px; overflow-y:auto; margin-top:12px;"></div>
+            </div>
+            <div class="owner-section-box">
+                <h4>⚙️ Owner Profile/Password Change (Optional)</h4>
+                <p style="font-size:11px; color:var(--text-muted); margin-bottom:10px;">প্রয়োজন না হলে পরিবর্তন করার প্রয়োজন নেই।</p>
+                <div class="input-group">
+                    <input type="text" id="change-owner-u" placeholder="New Owner Username" />
+                </div>
+                <div class="input-group">
+                    <input type="password" id="change-owner-p" placeholder="New Owner Password" />
+                </div>
+                <button class="action-btn btn-secondary" style="padding:10px; font-size:13px;" onclick="submitChangeOwnerCredentials()">Update Owner Login</button>
+            </div>
+            <button class="action-btn btn-secondary" style="margin-top:10px;" onclick="closeModal('owner-modal')">ড্যাশবোর্ড বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <script>
+        var bannerData = null;
+        var waitingPollInterval = null;
+        var currentPendingRoom = null;
+        var currentPendingName = null;
+        
+        // EXACT 12-SECOND SPLASH SCREEN TIMER
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                var splash = document.getElementById('splash-screen');
+                if (splash) {
+                    splash.classList.add('hide-splash');
+                }
+            }, 12000); // 12000 milliseconds = 12 Seconds
+        });
+
+        window.onload = function() {
+            checkBannerStatus();
+            setInterval(checkBannerStatus, 3000);
+        };
+        
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('sidebar-overlay').classList.toggle('active');
+        }
+        
+        function showToast(msg, type='success') {
+            var toast = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = msg;
+            toast.className = 'show ' + (type === 'error' ? 'toast-error' : 'toast-success');
+            setTimeout(() => toast.className = '', 3500);
+        }
+        
+        function scrollToSec(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
+        function openModal(id) { document.getElementById(id).classList.add('open'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+        
+        function toggleUserExpandableBox() {
+            var box = document.getElementById('user-expandable-box');
+            box.style.display = (box.style.display === 'block') ? 'none' : 'block';
+        }
+        
+        function checkBannerStatus() {
+            google.script.run.withSuccessHandler(function(data) {
+                var banner = document.getElementById('notice-banner');
+                if (data && (data.status === "WAITING" || data.status === "ACTIVE")) {
+                    bannerData = data;
+                    var text = (data.status === "WAITING")
+                        ? `Meeting বানানো হয়েছে [${data.room}] (Host অপেক্ষায়)`
+                        : `Meeting চলছে [${data.room}]`;
+                    document.getElementById('notice-text').innerText = text;
+                    banner.style.display = 'block';
+                } else {
+                    bannerData = null;
+                    banner.style.display = 'none';
+                }
+            }).getLatestMeetingStatusInfo();
+        }
+        
+        function handleCreateMeeting(autoJoin) {
+            var u = document.getElementById('host-user').value.trim();
+            var p = document.getElementById('host-pass').value.trim();
+            var room = document.getElementById('create-room').value.trim();
+            var pass = document.getElementById('create-password').value.trim();
+            var name = document.getElementById('create-name').value.trim();
+            
+            if (!u || !p || !room || !name) return showToast('সবগুলো ঘর পূরণ করুন', 'error');
+            
+            google.script.run.withSuccessHandler(function(ok) {
+                if (ok) {
+                    google.script.run.withSuccessHandler(function(res) {
+                        if (autoJoin) {
+                            openJitsiWindow(res.secretRoom, name, true);
+                        } else {
+                            showToast('মিটিং তৈরি করা হয়েছে! হোস্ট প্রবেশ করলে শুরু হবে।', 'success');
+                            checkBannerStatus();
+                        }
+                    }).createMeeting(room, pass, u, autoJoin);
+                } else showToast('ভুল হোস্ট ইউজারনেম/পাসওয়ার্ড!', 'error');
+            }).checkHostLogin(u, p);
+        }
+        
+        function joinMeetingProcess() {
+            var room = String(document.getElementById('join-room').value).trim();
+            var pass = String(document.getElementById('join-password').value).trim();
+            var name = String(document.getElementById('join-name').value).trim();
+            
+            if (!room || !name) return showToast('রুমের নাম এবং আপনার নাম দিন', 'error');
+            
+            google.script.run.withSuccessHandler(function(data) {
+                if (data.status === "INACTIVE" || !data.room) {
+                    return showToast('এই নামে কোনো সক্রিয় মিটিং পাওয়া যায়নি!', 'error');
+                }
+               
+                var sheetPass = String(data.pass || '').trim();
+                if (sheetPass !== "" && sheetPass !== pass) {
+                    return showToast('ভুল রুম পাসওয়ার্ড!', 'error');
+                }
+                if (data.status === "WAITING") {
+                    startWaitingProcess(room, name);
+                } else {
+                    openJitsiWindow(data.secretRoom, name, false);
+                }
+            }).getActiveMeetingByName(room);
+        }
+        
+        function startWaitingProcess(roomName, displayName) {
+            currentPendingRoom = roomName;
+            currentPendingName = displayName;
+           
+            openModal('zoom-waiting-modal');
+            if (waitingPollInterval) clearInterval(waitingPollInterval);
+            
+            waitingPollInterval = setInterval(function() {
+                google.script.run.withSuccessHandler(function(data) {
+                    if (data && data.status === "ACTIVE") {
+                        clearInterval(waitingPollInterval);
+                        closeModal('zoom-waiting-modal');
+                        showToast('হোস্ট জয়েন করেছেন! প্রবেশ করানো হচ্ছে...', 'success');
+                        openJitsiWindow(data.secretRoom, currentPendingName, false);
+                    }
+                }).getActiveMeetingByName(currentPendingRoom);
+            }, 2000);
+        }
+        
+        function cancelWaiting() {
+            if (waitingPollInterval) clearInterval(waitingPollInterval);
+            closeModal('zoom-waiting-modal');
+            showToast('অপেক্ষা বাতিল করা হয়েছে', 'error');
+        }
+        
+        function openHostJoinModal() {
+            if(!bannerData) return showToast('কোনো সক্রিয় মিটিং নেই', 'error');
+            openModal('host-login-modal');
+        }
+        
+        function submitHostBannerJoin() {
+            var u = document.getElementById('banner-host-u').value.trim();
+            var p = document.getElementById('banner-host-p').value.trim();
+            var name = document.getElementById('banner-host-name').value.trim();
+            
+            if(!u || !p || !name) return showToast('সবগুলো ঘর পূরণ করুন', 'error');
+            if(!bannerData) return showToast('কোনো সক্রিয় মিটিং পাওয়া যায়নি', 'error');
+            
+            google.script.run.withSuccessHandler(function(res) {
+                if(res.success) {
+                    closeModal('host-login-modal');
+                    openJitsiWindow(res.secretRoom, name, true);
+                    checkBannerStatus();
+                } else showToast(res.msg, 'error');
+            }).hostStartMeeting(bannerData.room, u, p);
+        }
+        
+        function executeExpandableUserJoin() {
+            if(!bannerData) return showToast('কোনো মিটিং সক্রিয় নেই', 'error');
+            var pass = String(document.getElementById('exp-user-pass').value).trim();
+            var name = String(document.getElementById('exp-user-name').value).trim();
+            
+            if(!name) return showToast('আপনার নাম লিখুন', 'error');
+            
+            document.getElementById('join-room').value = bannerData.room;
+            document.getElementById('join-password').value = pass;
+            document.getElementById('join-name').value = name;
+            joinMeetingProcess();
+        }
+        
+        function openJitsiWindow(secretRoom, displayName, isHost = false) {
+          //  var appId = "vpaas-magic-cookie-597bd5a7fd504fd7a90216318e083261";
+            var baseUrl = "https://meet.element.io/" + secretRoom;
+            var fullUrl = baseUrl + "#userInfo.displayName=" + encodeURIComponent('"' + displayName + '"');
+            
+            window.open(fullUrl, '_blank', 'width=1000,height=700,scrollbars=yes,resizable=yes');
+        }
+
+        function openOwnerModal() {
+            var u = document.getElementById('owner-u').value.trim();
+            var p = document.getElementById('owner-p').value.trim();
+            
+            if(!u || !p) return showToast('Owner লগইন তথ্য দিন', 'error');
+            
+            google.script.run.withSuccessHandler(function(ok) {
+                if(ok) {
+                    openModal('owner-modal');
+                    loadHostList();
+                    loadActiveMeetingDetails();
+                }
+                else showToast('ভুল Owner তথ্য!', 'error');
+            }).checkOwnerLogin(u, p);
+        }
+        
+        function loadActiveMeetingDetails() {
+            var container = document.getElementById('meeting-details-content');
+           
+            google.script.run.withSuccessHandler(function(data) {
+                if (!data) {
+                    container.innerHTML = "<p style='color:#ef4444; font-weight:bold;'>বর্তমানে কোনো সক্রিয় মিটিং চলছে না।</p>";
+                    return;
+                }
+                var hostStatus = data.isHostPresent
+                    ? "<span style='color:#10b981; font-weight:bold;'>উপস্থিত (ACTIVE)</span>"
+                    : "<span style='color:#ef4444; font-weight:bold;'>অনুপস্থিত (WAITING)</span>";
+                container.innerHTML = `
+                    <p><b>📌 রুম নাম:</b> ${data.roomName}</p>
+                    <p><b>👤 হোস্ট নাম:</b> ${data.hostName}</p>
+                    <p><b>🔑 রুম পাসওয়ার্ড:</b> ${data.password}</p>
+                    <p><b>⚡ মিটিং স্ট্যাটাস:</b> ${hostStatus}</p>
+                    <p><b>🕒 শুরুর সময়:</b> ${data.createdAt}</p>
+                    <p><b>⏱️ মোট সময়:</b> ${data.duration}</p>
+                    <p><b>🔗 Secret ID:</b> ${data.secretRoom}</p>
+                    <button onclick="deleteMeetingByOwnerProcess()" style="background:#ef4444; color:#fff; border:none; padding:10px; border-radius:8px; margin-top:12px; cursor:pointer; font-weight:bold; width:100%;">❌ মিটিং ফোর্স ক্লোজ / বন্ধ করুন</button>
+                `;
+            }).getOwnerFullMeetingDetails();
+        }
+        
+        function submitChangeOwnerCredentials() {
+            var currentU = document.getElementById('owner-u').value.trim();
+            var currentP = document.getElementById('owner-p').value.trim();
+            var newU = document.getElementById('change-owner-u').value.trim();
+            var newP = document.getElementById('change-owner-p').value.trim();
+            
+            if (!newU || !newP) return showToast('নতুন ইউজারনেম ও পাসওয়ার্ড লিখুন', 'error');
+            
+            google.script.run.withSuccessHandler(function(res) {
+                showToast(res.msg, res.success ? 'success' : 'error');
+                if (res.success) {
+                    document.getElementById('owner-u').value = newU;
+                    document.getElementById('owner-p').value = newP;
+                    document.getElementById('change-owner-u').value = '';
+                    document.getElementById('change-owner-p').value = '';
+                }
+            }).updateOwnerCredentials(currentU, currentP, newU, newP);
+        }
+        
+        function deleteMeetingByOwnerProcess() {
+            if (confirm("আপনি কি নিশ্চিত যে এই মিটিংটি বন্ধ করবেন?")) {
+                google.script.run.withSuccessHandler(function(res) {
+                    showToast(res.msg, res.success ? 'success' : 'error');
+                    if (res.success) {
+                        loadActiveMeetingDetails();
+                        checkBannerStatus();
+                    }
+                }).deleteMeetingByOwner();
+            }
+        }
+        
+        function loadHostList() {
+            google.script.run.withSuccessHandler(function(list) {
+                var container = document.getElementById('host-list-container');
+                container.innerHTML = '';
+                if(!list || list.length === 0) {
+                    container.innerHTML = '<div style="color:var(--text-muted); font-size:12px;">কোনো হোস্ট পাওয়া যায়নি</div>';
+                    return;
+                }
+                list.forEach(function(item) {
+                    container.innerHTML += `
+                        <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,255,255,0.05); padding:8px 12px; margin-bottom:6px; border-radius:10px; font-size:13px;">
+                            <span>👤 ${item.username}</span>
+                            <button onclick="removeHostProcess(${item.rowIndex})" style="background:#ef4444; color:#fff; border:none; padding:4px 8px; border-radius:6px; cursor:pointer; font-size:11px;">Delete</button>
+                        </div>`;
+                });
+            }).getHostList();
+        }
+        
+        function createNewHost() {
+            var u = document.getElementById('new-host-u').value.trim();
+            var p = document.getElementById('new-host-p').value.trim();
+            if(!u || !p) return showToast('ইউজারনেম এবং পাসওয়ার্ড দিন', 'error');
+            
+            google.script.run.withSuccessHandler(function(res) {
+                showToast(res.msg, res.success ? 'success' : 'error');
+                if(res.success) {
+                    document.getElementById('new-host-u').value = '';
+                    document.getElementById('new-host-p').value = '';
+                    loadHostList();
+                }
+            }).addHostByOwner(u, p);
+        }
+        
+        function removeHostProcess(rowIndex) {
+            if(confirm("আপনি কি নিশ্চিত যে এই হোস্টকে ডিলিট করতে চান?")) {
+                google.script.run.withSuccessHandler(function(res) {
+                    showToast(res.msg, res.success ? 'success' : 'error');
+                    if(res.success) loadHostList();
+                }).deleteHostByOwner(rowIndex);
+            }
+        }
+function showManualPage() {
+  document.querySelector('.container').style.display = 'none';
+  document.getElementById('manual-page').style.display = 'block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function hideManualPage() {
+  document.getElementById('manual-page').style.display = 'none';
+  document.querySelector('.container').style.display = 'block';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+    </script>
+
+
+    <!-- ==================== বিশাল USER MANUAL ==================== -->
+<div id="manual-page">
+  <div class="manual-full">
+    <h2>📖 Deen Connect - সম্পূর্ণ ও বিস্তারিত ইউজার ম্যানুয়াল</h2>
+    <p class="sub">
+      Version 3.2 (NORMAL)<br>
+      Developed by Hasan Al Bannah Muzahid<br>
+      এই ম্যানুয়ালটি এমনভাবে লেখা হয়েছে যাতে একবার পড়লে আর কখনো ভুলতে না হয়
+    </p>
+
+    <div class="manual-section">
+      <h3>১. Deen Connect কী এবং কেন ব্যবহার করবেন?</h3>
+      <p>Deen Connect হলো একটি সহজ, দ্রুত এবং নির্ভরযোগ্য লাইভ ভিডিও মিটিং সিস্টেম। এটি Google Sheets-এর উপর ভিত্তি করে তৈরি। এর মাধ্যমে আপনি অনলাইন ক্লাস, বৈঠক, আলোচনা বা যেকোনো ধরনের লাইভ মিটিং করতে পারবেন।</p>
+      <p>এই সিস্টেমের সুবিধা:</p>
+      <ul>
+        <li>কোনো অতিরিক্ত সফটওয়্যার ইনস্টল করতে হয় না</li>
+        <li>শুধু ব্রাউজার থাকলেই চলে</li>
+        <li>মোবাইল ও কম্পিউটার দুটোতেই ভালো কাজ করে</li>
+        <li>মিটিং তৈরি ও জয়েন করা খুবই সহজ</li>
+        <li>Owner চাইলে সম্পূর্ণ নিয়ন্ত্রণ করতে পারেন</li>
+      </ul>
+    </div>
+
+    <div class="manual-section">
+      <h3>২. প্রথমবার সাইট খুললে কী দেখবেন?</h3>
+      <ul>
+        <li>প্রথমে ১২ সেকেন্ডের একটি সুন্দর Splash Screen আসবে।</li>
+        <li>Splash-এ Deen Connect-এর নাম, ডেভেলপারের নাম এবং ভার্সন দেখা যাবে।</li>
+        <li>Splash শেষ হলে মূল পেজ চলে আসবে।</li>
+        <li>উপরে Navigation মেনু থাকবে (Join, Create, Owner, About)।</li>
+        <li>বাম পাশে Sidebar থাকবে (☰ বাটনে চাপলে খুলবে)।</li>
+      </ul>
+    </div>
+
+    <div class="manual-section">
+      <h3>৩. Join Meeting করার সম্পূর্ণ নিয়ম</h3>
+      <p>মিটিংয়ে যোগ দিতে চাইলে এই ধাপগুলো অনুসরণ করুন:</p>
+      <ul>
+        <li><b>ধাপ ১:</b> “Join Meeting” অংশে যান।</li>
+        <li><b>ধাপ ২:</b> Room Name লিখুন (যে নামে Host মিটিং তৈরি করেছে)।</li>
+        <li><b>ধাপ ৩:</b> যদি Room-এ পাসওয়ার্ড থাকে তাহলে পাসওয়ার্ড দিন। না থাকলে খালি রাখুন।</li>
+        <li><b>ধাপ ৪:</b> আপনার Display Name লিখুন (মিটিংয়ে যে নামে আপনাকে দেখাবে)।</li>
+        <li><b>ধাপ ৫:</b> “Join Meeting” বাটনে চাপুন।</li>
+      </ul>
+      <div class="manual-highlight">
+        যদি Host এখনো মিটিংয়ে না এসে থাকে, তাহলে একটি অপেক্ষা স্ক্রিন আসবে। Host জয়েন করলে আপনি স্বয়ংক্রিয়ভাবে মিটিংয়ে প্রবেশ করবেন।
+      </div>
+    </div>
+
+    <div class="manual-section">
+      <h3>৪. Create Meeting করার সম্পূর্ণ নিয়ম (Host-দের জন্য)</h3>
+      <p>নতুন মিটিং তৈরি করতে চাইলে:</p>
+      <ul>
+        <li><b>ধাপ ১:</b> “Create Meeting” অংশে যান।</li>
+        <li><b>ধাপ ২:</b> Host Username লিখুন।</li>
+        <li><b>ধাপ ৩:</b> Host Password লিখুন।</li>
+        <li><b>ধাপ ৪:</b> নতুন Room Name দিন (যেকোনো নাম হতে পারে)।</li>
+        <li><b>ধাপ ৫:</b> প্রয়োজন হলে Room Password সেট করুন।</li>
+        <li><b>ধাপ ৬:</b> আপনার Display Name লিখুন।</li>
+        <li><b>ধাপ ৭:</b> দুটি অপশন পাবেন:
+          <ul>
+            <li><b>Create & Start</b> → মিটিং সাথে সাথে শুরু হবে এবং আপনি জয়েন করবেন।</li>
+            <li><b>Create & Wait</b> → মিটিং তৈরি হবে কিন্তু আপনি পরে জয়েন করবেন। অন্যরা অপেক্ষা করতে পারবে।</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="manual-section">
+      <h3>৫. উপরের হলুদ ব্যানার (Meeting চলছে) কীভাবে ব্যবহার করবেন</h3>
+      <p>যখন কোনো মিটিং Active বা Waiting অবস্থায় থাকে, তখন পেজের উপরে একটি হলুদ ব্যানার দেখা যায়।</p>
+      <ul>
+        <li><b>Join as Host</b> বাটনে চাপলে Host Verification চাইবে। সঠিক Host Username ও Password দিলে আপনি Host হিসেবে জয়েন করতে পারবেন।</li>
+        <li><b>Join as User</b> বাটনে চাপলে একটি বক্স খুলবে। সেখানে পাসওয়ার্ড (যদি থাকে) এবং আপনার নাম দিয়ে সরাসরি জয়েন করা যায়।</li>
+      </ul>
+    </div>
+
+    <div class="manual-section">
+      <h3>৬. Owner Dashboard কীভাবে ব্যবহার করবেন</h3>
+      <p>Owner Dashboard হলো সিস্টেমের সবচেয়ে শক্তিশালী অংশ। এখানে গিয়ে আপনি পারবেন:</p>
+      <ul>
+        <li>চলমান মিটিংয়ের সম্পূর্ণ তথ্য দেখতে</li>
+        <li>নতুন Host যোগ করতে</li>
+        <li>পুরনো Host ডিলিট করতে</li>
+        <li>মিটিং জোর করে বন্ধ (Force Close) করতে</li>
+        <li>Owner-এর নিজের Username ও Password পরিবর্তন করতে</li>
+      </ul>
+      <p><b>Owner Dashboard খোলার নিয়ম:</b></p>
+      <ul>
+        <li>“Owner Login” অংশে যান।</li>
+        <li>Owner Username এবং Password দিন।</li>
+        <li>“Open Owner Dashboard” বাটনে চাপুন।</li>
+      </ul>
+    </div>
+
+    <div class="manual-section">
+      <h3>৭. মিটিং শেষ করার সঠিক নিয়ম</h3>
+      <p>মিটিং শেষ হলে Element/Jitsi-এর ভিতরের Leave বাটনে না চেপে সরাসরি সেই ট্যাবটি <b>বন্ধ (Close)</b> করে দিন।</p>
+      <div class="manual-highlight">
+        ট্যাব বন্ধ করলে আপনি আবার Deen Connect পেজে ফিরে আসবেন।
+      </div>
+    </div>
+
+    <div class="manual-section">
+      <h3>৮. Sidebar ও Navigation কীভাবে ব্যবহার করবেন</h3>
+      <ul>
+        <li>উপরের বাম দিকের ☰ বাটনে চাপলে Sidebar খুলবে।</li>
+        <li>Sidebar থেকে Join, Create, Owner, Manual এবং About-এ যেতে পারবেন।</li>
+        <li>উপরের Navigation বাটনগুলো দিয়েও একই কাজ করা যায়।</li>
+      </ul>
+    </div>
+
+    <div class="manual-section">
+      <h3>৯. সাধারণ সমস্যা এবং তার সমাধান</h3>
+      <ul>
+        <li><b>সমস্যা:</b> মিটিং পাওয়া যাচ্ছে না<br><b>সমাধান:</b> Room Name সঠিকভাবে লিখেছেন কিনা চেক করুন।</li>
+        <li><b>সমস্যা:</b> Host লগইন হচ্ছে না<br><b>সমাধান:</b> Username এবং Password ঠিক আছে কিনা দেখুন।</li>
+        <li><b>সমস্যা:</b> অপেক্ষা স্ক্রিন আটকে আছে<br><b>সমাধান:</b> Host মিটিংয়ে জয়েন করেছে কিনা দেখুন।</li>
+        <li><b>সমস্যা:</b> Owner Dashboard খুলছে না<br><b>সমাধান:</b> সঠিক Owner Username ও Password দিন।</li>
+        <li><b>সমস্যা:</b> মিটিং থেকে বের হতে পারছি না<br><b>সমাধান:</b> মিটিংয়ের ট্যাবটি সরাসরি বন্ধ করে দিন।</li>
+      </ul>
+    </div>
+
+    <div class="manual-section">
+      <h3>১০. ভালো ব্যবহারের কিছু পরামর্শ</h3>
+      <ul>
+        <li>Room Name সহজ এবং মনে রাখার মতো রাখুন।</li>
+        <li>প্রয়োজন না হলে Room Password না দিলেই ভালো।</li>
+        <li>মিটিং শেষ হলে Owner চাইলে Force Close করে দিতে পারেন।</li>
+        <li>Display Name সঠিক এবং পরিচিত রাখুন।</li>
+      </ul>
+    </div>
+
+    <div class="manual-section">
+      <h3>১১. যোগাযোগ ও সাপোর্ট</h3>
+      <p>কোনো সমস্যা হলে ডেভেলপারের সাথে যোগাযোগ করুন:</p>
+      <p>
+        <b>Hasan Al Bannah Muzahid</b><br>
+        Email: muzahid0144181@gmail.com<br>
+        WhatsApp: +880 1718517927
+      </p>
+    </div>
+
+    <div class="manual-section">
+      <h3>১২. শেষ কথা</h3>
+      <p>এই ম্যানুয়ালটি পড়ার পর আপনি Deen Connect-এর প্রায় সবকিছু জেনে গেছেন। এখন আত্মবিশ্বাসের সাথে ব্যবহার করুন।</p>
+      <div class="manual-highlight">
+        Deen Connect ব্যবহার করে সুন্দর ও সুষ্ঠু মিটিং উপভোগ করুন।
+      </div>
+    </div>
+
+    <button class="action-btn" style="margin-top: 16px;" onclick="hideManualPage()">← হোমপেজে ফিরে যান</button>
+  </div>
+</div>
+</body>
+</html>
+
+ <!-- var baseUrl = "https://meet.element.io/" + secretRoom; -->
